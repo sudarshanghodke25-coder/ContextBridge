@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Context Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">🌉 Context Bridge</div>
+    </header>
+    <main>
+      <div id="status-area">
+        <p id="status-text">Detecting context...</p>
+      </div>
+      
+      <div id="bridge-options" style="display: none;">
+        <p class="section-title">Bridge conversation to:</p>
+        <button class="bridge-btn" data-target="chatgpt">
+          <span class="icon">🟢</span> ChatGPT
+        </button>
+        <button class="bridge-btn" data-target="claude">
+          <span class="icon">🟠</span> Claude
+        </button>
+        <button class="bridge-btn" data-target="gemini">
+          <span class="icon">✨</span> Gemini
+        </button>
+      </div>
+    </main>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

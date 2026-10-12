@@ -1,0 +1,76 @@
+:root {
+  --bg-color: #1e1e2e;
+  --text-color: #cdd6f4;
+  --accent-color: #cba6f7;
+  --button-bg: #313244;
+  --button-hover: #45475a;
+  --border-radius: 8px;
+}
+
+body {
+  width: 320px;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.container {
+  padding: 16px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--button-bg);
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+#status-area {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  padding: 8px;
+  background-color: var(--button-bg);
+  border-radius: var(--border-radius);
+}
+
+.section-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  color: #a6adc8;
+}
+
+.bridge-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.bridge-btn:hover {
+  background-color: var(--button-hover);
+}
+
+.bridge-btn .icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
