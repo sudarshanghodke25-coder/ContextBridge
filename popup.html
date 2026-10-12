@@ -1,34 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Context Bridge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ContextBridge</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">🌉 Context Bridge</div>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-icon">🌉</span>
+        <div class="brand-text">
+          <span class="brand-title">ContextBridge</span>
+          <span class="brand-subtitle">Continuity Workspace</span>
+        </div>
+      </div>
+      <button id="btn-open-workspace" class="icon-btn" title="Open Full Workspace Tab" aria-label="Open Workspace">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </button>
     </header>
-    <main>
-      <div id="status-area">
-        <p id="status-text">Detecting context...</p>
-      </div>
-      
-      <div id="bridge-options" style="display: none;">
-        <p class="section-title">Bridge conversation to:</p>
-        <button class="bridge-btn" data-target="chatgpt">
-          <span class="icon">🟢</span> ChatGPT
-        </button>
-        <button class="bridge-btn" data-target="claude">
-          <span class="icon">🟠</span> Claude
-        </button>
-        <button class="bridge-btn" data-target="gemini">
-          <span class="icon">✨</span> Gemini
-        </button>
-      </div>
+
+    <!-- Main Content Area -->
+    <main class="popup-main">
+      <!-- Status Card: Detecting / Supported / Unsupported -->
+      <section id="detection-card" class="card status-card">
+        <div id="status-detecting" class="status-view">
+          <div class="spinner"></div>
+          <p class="status-msg">Inspecting active tab...</p>
+        </div>
+
+        <!-- Supported Page State -->
+        <div id="status-supported" class="status-view" style="display: none;">
+          <div class="provider-badge-row">
+            <span id="provider-badge" class="badge badge-provider">ChatGPT</span>
+            <span class="status-dot"></span>
+            <span class="text-xs text-muted">Active session</span>
+          </div>
+          <h3 id="detected-title" class="detected-title">Conversation Title</h3>
+          <p id="detected-stats" class="text-xs text-muted">0 messages detected</p>
+
+          <button id="btn-capture" class="btn btn-primary btn-block mt-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Capture Conversation Brief
+          </button>
+        </div>
+
+        <!-- Unsupported Page State (Friendly recoverable starting point) -->
+        <div id="status-unsupported" class="status-view" style="display: none;">
+          <div class="unsupported-header">
+            <span class="unsupported-icon">💡</span>
+            <div>
+              <h4 class="text-sm font-semibold">No AI chat detected here</h4>
+              <p class="text-xs text-muted">You can still bring in your context or open past briefs.</p>
+            </div>
+          </div>
+
+          <div class="quick-import-actions mt-3">
+            <button id="btn-quick-paste" class="btn btn-secondary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Paste Chat
+            </button>
+            <button id="btn-quick-import" class="btn btn-secondary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              Import File
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Direct LLM Bridge Target Row -->
+      <section class="section-container">
+        <span class="section-label">Bridge to New Chat:</span>
+        <div class="bridge-grid">
+          <button class="bridge-target-btn" data-target="chatgpt" title="Open ChatGPT">
+            <span class="target-icon">🟢</span>
+            <span>ChatGPT</span>
+          </button>
+          <button class="bridge-target-btn" data-target="claude" title="Open Claude">
+            <span class="target-icon">🟠</span>
+            <span>Claude</span>
+          </button>
+          <button class="bridge-target-btn" data-target="gemini" title="Open Gemini">
+            <span class="target-icon">✨</span>
+            <span>Gemini</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Recent Saved Briefs -->
+      <section class="section-container">
+        <div class="section-header-row">
+          <span class="section-label">Recent Projects & Briefs</span>
+          <button id="btn-view-all" class="text-link text-xs">View all</button>
+        </div>
+        <div id="recent-briefs-list" class="recent-list">
+          <div class="empty-recent text-xs text-muted">No briefs yet. Capture or paste a chat to begin.</div>
+        </div>
+      </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span class="text-xs text-muted">Privacy-first · Local processing only</span>
+      <button id="btn-settings-link" class="icon-link" title="Settings & Privacy">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </footer>
   </div>
-  <script src="popup.js"></script>
+
+  <script type="module" src="popup.js"></script>
 </body>
 </html>

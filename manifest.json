@@ -1,9 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Context Bridge",
-  "version": "1.0",
-  "description": "Switch conversations seamlessly between LLMs.",
-  "permissions": ["activeTab", "storage", "tabs", "scripting"],
+  "name": "ContextBridge",
+  "version": "1.0.0",
+  "description": "Privacy-first browser extension for AI conversation continuity and structured project briefs.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
   "host_permissions": [
     "https://chatgpt.com/*",
     "https://claude.ai/*",
@@ -11,10 +16,11 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Context Bridge"
+    "default_title": "ContextBridge — Continuity Workspace"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
